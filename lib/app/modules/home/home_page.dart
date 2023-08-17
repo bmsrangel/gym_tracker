@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,13 +9,50 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late final ValueNotifier<int> _selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = ValueNotifier<int>(0);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('Gym Tracker'),
       ),
-      body: Container(),
+      body: const Center(
+        child: RouterOutlet(),
+      ),
+      bottomNavigationBar: ValueListenableBuilder(
+        valueListenable: _selectedIndex,
+        builder: (_, selectedIndex, __) => BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Workouts',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.work),
+              label: 'Exercises',
+            ),
+          ],
+          onTap: (value) {
+            _selectedIndex.value = value;
+            switch (value) {
+              case 0:
+                Modular.to.navigate('/workouts/');
+                break;
+              case 1:
+                Modular.to.navigate('/exercises/');
+                break;
+            }
+          },
+          currentIndex: selectedIndex,
+        ),
+      ),
     );
   }
 }

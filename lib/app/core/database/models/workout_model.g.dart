@@ -3,13 +3,64 @@
 part of 'workout_model.dart';
 
 // **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_WorkoutModel _$WorkoutModelFromJson(Map<String, dynamic> json) =>
+    _WorkoutModel()
+      ..id = json['id'] as String
+      ..date = DateTime.parse(json['date'] as String)
+      ..activities = (json['activities'] as List<dynamic>)
+          .map((e) => _ActivityModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+
+Map<String, dynamic> _$WorkoutModelToJson(_WorkoutModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'date': instance.date.toIso8601String(),
+      'activities': instance.activities,
+    };
+
+_ActivityModel _$ActivityModelFromJson(Map<String, dynamic> json) =>
+    _ActivityModel()
+      ..id = json['id'] as String
+      ..exercise = json['exercise'] == null
+          ? null
+          : _ExerciseModel.fromJson(json['exercise'] as Map<String, dynamic>)
+      ..repetitions = json['repetitions'] as int?
+      ..series = json['series'] as int?
+      ..durationInSeconds = json['durationInSeconds'] as int?;
+
+Map<String, dynamic> _$ActivityModelToJson(_ActivityModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'exercise': instance.exercise,
+      'repetitions': instance.repetitions,
+      'series': instance.series,
+      'durationInSeconds': instance.durationInSeconds,
+    };
+
+_ExerciseModel _$ExerciseModelFromJson(Map<String, dynamic> json) =>
+    _ExerciseModel()
+      ..id = json['id'] as String
+      ..title = json['title'] as String
+      ..description = json['description'] as String;
+
+Map<String, dynamic> _$ExerciseModelToJson(_ExerciseModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'description': instance.description,
+    };
+
+// **************************************************************************
 // RealmObjectGenerator
 // **************************************************************************
 
 class WorkoutModel extends _WorkoutModel
     with RealmEntity, RealmObjectBase, RealmObject {
   WorkoutModel(
-    Uuid id,
+    String id,
     DateTime date, {
     Iterable<ActivityModel> activities = const [],
   }) {
@@ -22,9 +73,9 @@ class WorkoutModel extends _WorkoutModel
   WorkoutModel._();
 
   @override
-  Uuid get id => RealmObjectBase.get<Uuid>(this, 'id') as Uuid;
+  String get id => RealmObjectBase.get<String>(this, 'id') as String;
   @override
-  set id(Uuid value) => RealmObjectBase.set(this, 'id', value);
+  set id(String value) => RealmObjectBase.set(this, 'id', value);
 
   @override
   DateTime get date => RealmObjectBase.get<DateTime>(this, 'date') as DateTime;
@@ -52,7 +103,7 @@ class WorkoutModel extends _WorkoutModel
     RealmObjectBase.registerFactory(WorkoutModel._);
     return const SchemaObject(
         ObjectType.realmObject, WorkoutModel, 'WorkoutModel', [
-      SchemaProperty('id', RealmPropertyType.uuid, primaryKey: true),
+      SchemaProperty('id', RealmPropertyType.string, primaryKey: true),
       SchemaProperty('date', RealmPropertyType.timestamp),
       SchemaProperty('activities', RealmPropertyType.object,
           linkTarget: 'ActivityModel',
@@ -64,7 +115,7 @@ class WorkoutModel extends _WorkoutModel
 class ActivityModel extends _ActivityModel
     with RealmEntity, RealmObjectBase, RealmObject {
   ActivityModel(
-    Uuid id, {
+    String id, {
     ExerciseModel? exercise,
     int? repetitions,
     int? series,
@@ -80,9 +131,9 @@ class ActivityModel extends _ActivityModel
   ActivityModel._();
 
   @override
-  Uuid get id => RealmObjectBase.get<Uuid>(this, 'id') as Uuid;
+  String get id => RealmObjectBase.get<String>(this, 'id') as String;
   @override
-  set id(Uuid value) => RealmObjectBase.set(this, 'id', value);
+  set id(String value) => RealmObjectBase.set(this, 'id', value);
 
   @override
   ExerciseModel? get exercise =>
@@ -122,7 +173,7 @@ class ActivityModel extends _ActivityModel
     RealmObjectBase.registerFactory(ActivityModel._);
     return const SchemaObject(
         ObjectType.realmObject, ActivityModel, 'ActivityModel', [
-      SchemaProperty('id', RealmPropertyType.uuid, primaryKey: true),
+      SchemaProperty('id', RealmPropertyType.string, primaryKey: true),
       SchemaProperty('exercise', RealmPropertyType.object,
           optional: true, linkTarget: 'ExerciseModel'),
       SchemaProperty('repetitions', RealmPropertyType.int, optional: true),
@@ -136,7 +187,7 @@ class ActivityModel extends _ActivityModel
 class ExerciseModel extends _ExerciseModel
     with RealmEntity, RealmObjectBase, RealmObject {
   ExerciseModel(
-    Uuid id,
+    String id,
     String title,
     String description,
   ) {
@@ -148,9 +199,9 @@ class ExerciseModel extends _ExerciseModel
   ExerciseModel._();
 
   @override
-  Uuid get id => RealmObjectBase.get<Uuid>(this, 'id') as Uuid;
+  String get id => RealmObjectBase.get<String>(this, 'id') as String;
   @override
-  set id(Uuid value) => RealmObjectBase.set(this, 'id', value);
+  set id(String value) => RealmObjectBase.set(this, 'id', value);
 
   @override
   String get title => RealmObjectBase.get<String>(this, 'title') as String;
@@ -177,7 +228,7 @@ class ExerciseModel extends _ExerciseModel
     RealmObjectBase.registerFactory(ExerciseModel._);
     return const SchemaObject(
         ObjectType.realmObject, ExerciseModel, 'ExerciseModel', [
-      SchemaProperty('id', RealmPropertyType.uuid, primaryKey: true),
+      SchemaProperty('id', RealmPropertyType.string, primaryKey: true),
       SchemaProperty('title', RealmPropertyType.string),
       SchemaProperty('description', RealmPropertyType.string),
     ]);
