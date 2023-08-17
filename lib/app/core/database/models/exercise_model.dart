@@ -1,6 +1,4 @@
-import 'package:realm/realm.dart';
-
-part 'exercise_model.g.dart';
+part of 'workout_model.dart';
 
 @RealmModel()
 class _ExerciseModel {

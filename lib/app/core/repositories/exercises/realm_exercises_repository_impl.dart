@@ -1,7 +1,8 @@
-import 'package:gym_tracker/app/core/database/models/exercise_model.dart';
 import 'package:gym_tracker/app/core/dtos/create_exercise_dto.dart';
 import 'package:gym_tracker/app/core/repositories/exercises/exercises_repository.dart';
 import 'package:realm/realm.dart';
+
+import '../../database/models/workout_model.dart';
 
 class RealmExercisesRepositoryImpl implements ExercisesRepository {
   RealmExercisesRepositoryImpl(this._realm);

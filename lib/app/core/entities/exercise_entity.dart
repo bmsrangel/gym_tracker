@@ -12,7 +12,7 @@ class ExerciseEntity extends Equatable {
   final String description;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id,
         title,
         description,
