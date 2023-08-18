@@ -10,7 +10,7 @@ class RealmConfig {
         ActivityModel.schema,
         WorkoutModel.schema,
       ],
-      schemaVersion: 2,
+      schemaVersion: 0,
     );
     return Realm(config);
   }

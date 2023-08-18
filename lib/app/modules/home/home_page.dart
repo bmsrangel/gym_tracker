@@ -20,9 +20,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Gym Tracker'),
-      ),
       body: const Center(
         child: RouterOutlet(),
       ),
@@ -32,11 +29,11 @@ class _HomePageState extends State<HomePage> {
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'Workouts',
+              label: 'Treinos',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.work),
-              label: 'Exercises',
+              label: 'Exercícios',
             ),
           ],
           onTap: (value) {

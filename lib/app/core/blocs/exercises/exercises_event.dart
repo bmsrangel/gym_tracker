@@ -13,3 +13,9 @@ class AddExerciseEvent implements ExercisesEvent {
 
   final CreateExerciseDto newExercise;
 }
+
+class UpdateExerciseEvent implements ExercisesEvent {
+  const UpdateExerciseEvent(this.updatedExercise);
+
+  final ExerciseEntity updatedExercise;
+}

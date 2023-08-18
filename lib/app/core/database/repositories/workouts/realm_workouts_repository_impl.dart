@@ -1,6 +1,5 @@
 import 'package:gym_tracker/app/core/database/models/workout_model.dart';
 import 'package:gym_tracker/app/core/database/repositories/workouts/workouts_repository.dart';
-import 'package:gym_tracker/app/core/dtos/create_workout_dto.dart';
 import 'package:realm/realm.dart';
 
 class RealmWorkoutsRepositoryImpl implements WorkoutsRepository {
@@ -15,16 +14,23 @@ class RealmWorkoutsRepositoryImpl implements WorkoutsRepository {
   }
 
   @override
-  Future<void> insertOne(CreateWorkoutDto newRegister) async {
+  Future<void> insertOne(Map<String, dynamic> newRegister) async {
     _realm.write(() {
       _realm.add(
         WorkoutModel(
           Uuid.v4().toString(),
           DateTime.now(),
-          activities: newRegister.activities.map((activityEntity) =>
-              _realm.find(Uuid.fromString(activityEntity.id))!),
+          activities: (newRegister['activities'] as List).map(
+              (activityEntity) =>
+                  _realm.find(Uuid.fromString(activityEntity['id']))!),
         ),
       );
     });
+  }
+
+  @override
+  Future<void> updateOne(Map<String, dynamic> updatedRegister) {
+    // TODO: implement updateOne
+    throw UnimplementedError();
   }
 }

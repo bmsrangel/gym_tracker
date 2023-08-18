@@ -26,4 +26,16 @@ class ExerciseEntity extends Equatable {
         title,
         description,
       ];
+
+  ExerciseEntity copyWith({
+    String? id,
+    String? title,
+    String? description,
+  }) {
+    return ExerciseEntity(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+    );
+  }
 }
