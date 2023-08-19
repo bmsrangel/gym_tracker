@@ -33,4 +33,10 @@ class RealmActivitiesRepositoryImpl implements ActivitiesRepository {
     // TODO: implement updateOne
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> deleteOne(String registerId) {
+    // TODO: implement deleteOne
+    throw UnimplementedError();
+  }
 }

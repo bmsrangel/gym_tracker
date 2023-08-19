@@ -19,3 +19,9 @@ class UpdateExerciseEvent implements ExercisesEvent {
 
   final ExerciseEntity updatedExercise;
 }
+
+class DeleteExerciseEvent implements ExercisesEvent {
+  const DeleteExerciseEvent(this.exercise);
+
+  final ExerciseEntity exercise;
+}

@@ -10,7 +10,8 @@ class RealmExercisesRepositoryImpl implements ExercisesRepository {
 
   @override
   Future<List<Map<String, dynamic>>> findAll() async {
-    final exercises = _realm.all<ExerciseModel>();
+    final exercises =
+        _realm.query<ExerciseModel>('TRUEPREDICATE SORT(title ASC)');
     return exercises.map((e) => e.toJson()).toList();
   }
 
@@ -39,5 +40,15 @@ class RealmExercisesRepositoryImpl implements ExercisesRepository {
         update: true,
       );
     });
+  }
+
+  @override
+  Future<void> deleteOne(String registerId) async {
+    final ExerciseModel? exercise = _realm.find<ExerciseModel>(registerId);
+    if (exercise != null) {
+      _realm.write(() {
+        _realm.delete(exercise);
+      });
+    }
   }
 }

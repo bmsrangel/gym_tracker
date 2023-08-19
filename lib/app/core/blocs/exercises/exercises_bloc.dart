@@ -12,6 +12,7 @@ class ExercisesBloc extends Bloc<ExercisesEvent, ExercisesState> {
     on<FetchExercisesEvent>(_onFetchExercisesEvent);
     on<AddExerciseEvent>(_onAddExerciseEvent);
     on<UpdateExerciseEvent>(_onUpdateExerciseEvent);
+    on<DeleteExerciseEvent>(_onDeleteExerciseEvent);
   }
 
   final ExercisesService _exercisesService;
@@ -28,5 +29,9 @@ class ExercisesBloc extends Bloc<ExercisesEvent, ExercisesState> {
 
   Future<void> _onUpdateExerciseEvent(UpdateExerciseEvent event, emit) async {
     await _exercisesService.updateExercise(event.updatedExercise);
+  }
+
+  Future<void> _onDeleteExerciseEvent(DeleteExerciseEvent event, emit) async {
+    await _exercisesService.deleteExercise(event.exercise);
   }
 }

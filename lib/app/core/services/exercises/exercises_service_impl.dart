@@ -26,4 +26,9 @@ class ExercisesServiceImpl implements ExercisesService {
       updatedExercise.toJson(),
     );
   }
+
+  @override
+  Future<void> deleteExercise(ExerciseEntity toDeleteExercise) async {
+    await _exercisesRepository.deleteOne(toDeleteExercise.id);
+  }
 }

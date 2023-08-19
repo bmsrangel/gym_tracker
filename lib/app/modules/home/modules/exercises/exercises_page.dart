@@ -44,21 +44,44 @@ class _ExercisesPageState extends State<ExercisesPage> {
                   ? const Text('Nenhum exercício cadastrado')
                   : ListView.builder(
                       itemCount: exercises.length,
-                      itemBuilder: (_, index) => ListTile(
-                        title: Text(exercises[index].title),
-                        subtitle: Text(exercises[index].description),
-                        onTap: () async {
-                          final ExerciseEntity? updatedExercise =
-                              await Modular.to.pushNamed(
-                            'exercise',
-                            arguments: exercises[index],
+                      itemBuilder: (_, index) => Dismissible(
+                        key: ValueKey(exercises[index].id),
+                        direction: DismissDirection.endToStart,
+                        background: Container(
+                          alignment: Alignment.centerRight,
+                          width: double.maxFinite,
+                          height: double.maxFinite,
+                          padding: const EdgeInsets.only(right: 16.0),
+                          color: Colors.red,
+                          child: const Icon(
+                            Icons.delete,
+                            color: Colors.white,
+                          ),
+                        ),
+                        onDismissed: (direction) {
+                          _exercisesBloc.add(
+                            DeleteExerciseEvent(
+                              exercises[index],
+                            ),
                           );
-                          if (updatedExercise != null) {
-                            _exercisesBloc
-                                .add(UpdateExerciseEvent(updatedExercise));
-                            _exercisesBloc.add(const FetchExercisesEvent());
-                          }
+                          _exercisesBloc.add(const FetchExercisesEvent());
                         },
+                        child: ListTile(
+                          title: Text(exercises[index].title),
+                          subtitle: Text(exercises[index].description),
+                          onTap: () async {
+                            final ExerciseEntity? updatedExercise =
+                                await Modular.to.pushNamed(
+                              'exercise',
+                              arguments: exercises[index],
+                            );
+                            if (updatedExercise != null) {
+                              _exercisesBloc
+                                  .add(UpdateExerciseEvent(updatedExercise));
+                              _exercisesBloc.add(const FetchExercisesEvent());
+                            }
+                          },
+                        ),
                       ),
                     ),
           },
